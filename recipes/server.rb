@@ -127,13 +127,12 @@ template "#{node['mysql']['conf_dir']}/my.cnf" do
   variables :skip_federated => skip_federated
 end
 
-unless Chef::Config[:solo]
-  ruby_block "save node data" do
-    block do
-      node.save
-    end
-    action :create
+ruby_block "save node data" do
+  not_if { Chef::Config[:solo] }
+  block do
+    node.save
   end
+  action :create
 end
 
 # set the root password on platforms 
