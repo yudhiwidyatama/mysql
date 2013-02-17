@@ -36,7 +36,12 @@ when "centos", "amazon", "redhat"
     action :add
   end
   arch = node['kernel']['machine']
-  arch = "i386" unless arch == "x86_64"
+  if arch == "x86_64"
+    arch = "amd64"
+  end
+  if arch == "i386"
+    arch = "x86"
+  end
   pversion = node['platform_version']
   platformcode = "rhel6"
   yum_repository "MariaDB" do
