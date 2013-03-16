@@ -244,7 +244,22 @@ innodb_log_buffer_size  = <%= node['mysql']['tunable']['innodb_log_buffer_size']
 <%- if node['mysql']['tunable']['innodb_adaptive_flushing'] %>
 innodb_adaptive_flushing  = <%= node['mysql']['tunable']['innodb_adaptive_flushing'] %>
 <%- end %>
-
+<% if @wsrep_enable %>
+# Full path to wsrep provider library or 'none'
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+#
+# Group communication system handle
+wsrep_cluster_address="gcomm://"
+#
+# State Snapshot Transfer method
+wsrep_sst_method=rsync
+#
+# SST authentication string. This will be used to send SST to joining nodes.
+# Depends on SST method. For mysqldump method it is root:
+wsrep_sst_auth=sst:sstpasswd
+#
+#
+<% end %>
 <% if @skip_federated %>
 #
 # * Federated

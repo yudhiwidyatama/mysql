@@ -125,7 +125,10 @@ unless platform_family?(%w{mac_os_x})
       not_if { Win32::Service.exists?(node['mysql']['service_name']) }
     end
   end
-
+  wsrep_enable = false
+  if node['mysql']['wsrep_enable']
+     wsrep_enable = true
+  end
   skip_federated = case node['platform']
                    when 'fedora', 'ubuntu', 'amazon'
                      true
@@ -212,7 +215,8 @@ unless platform_family?(%w{mac_os_x})
     else
       Chef::Log.info "my.cnf updated but mysql.reload_action is #{node['mysql']['reload_action']}. No action taken."
     end
-    variables :skip_federated => skip_federated
+    variables ({ :skip_federated => skip_federated,
+		:wsrep_enable => wsrep_enable })
   end
 
   service "mysql" do
