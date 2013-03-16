@@ -249,7 +249,7 @@ innodb_adaptive_flushing  = <%= node['mysql']['tunable']['innodb_adaptive_flushi
 wsrep_provider=/usr/lib64/galera/libgalera_smm.so
 #
 # Group communication system handle
-wsrep_cluster_address="gcomm://"
+wsrep_cluster_address="gcomm://<%= node['mysql']['wsrep_cluster_address'] %>"
 #
 # State Snapshot Transfer method
 wsrep_sst_method=rsync
