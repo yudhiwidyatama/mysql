@@ -257,6 +257,9 @@ wsrep_sst_method=rsync
 # SST authentication string. This will be used to send SST to joining nodes.
 # Depends on SST method. For mysqldump method it is root:
 wsrep_sst_auth=sst:sstpasswd
+<%- if node['mysql']['wsrep_replicate_myisam'] %>
+wsrep_replicate_myisam=<%= node['mysql']['wsrep_replicate_myisam'] %>
+<%- end %>
 #
 #
 <% end %>
